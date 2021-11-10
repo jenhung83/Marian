@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Marian後台</title>
+        <!-- fontawesome -->
+        <link
+            rel="stylesheet"
+            href="/stylesheets/font-awesome-4.7.0/css/font-awesome.css"
+        />
+        <!-- ours -->
+        <link rel="icon" href="/img/大專LOGOtest.png" />
+        <link rel="stylesheet" href="/stylesheets/main.css" />
+        <link rel="stylesheet" href="/stylesheets/news.css" />
+    </head>
+
+    <body>
+        <span id="news" hidden> <%= JSON.stringify(news); %> </span>
+        <span id="newsContent" hidden>
+            <%= JSON.stringify(newsContent); %>
+        </span>
+        <!-- ------------------------- left section ------------------------- -->
+        <div><%- include('./main.ejs'); %></div>
+
+        <!-- ------------------------- right section ------------------------- -->
+        <div id="container">
+            <!-- heading section -->
+            <div id="headingSec">
+                <div id="notification"><%- include('./marquee.ejs'); %></div>
+                <!-- 組長這裏面的 input & button 給你寫
+                    開始創作..... -->
+                <form action="">
+                    <div class="searchInput">
+                        <span>分類&nbsp;|</span>
+                        <select name="sortNews" id="sortNews">
+                            <option value="">請選擇</option>
+                            <option value="newsId">編號</option>
+                            <option value="newsTitle">標題</option>
+                        </select>
+                        <!--想客製化select display但願望還沒實現： https://www.w3schools.com/howto/howto_custom_select.asp -->
+                    </div>
+                    <div class="searchInput">
+                        <span>文章搜尋&nbsp;|</span>
+                        <input id="inputNews" type="text" />
+                    </div>
+                    <button type="button" id="searchBtn">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        搜尋文章
+                    </button>
+                    <button type="reset" id="clearBtn">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        清除輸入
+                    </button>
+                    <button type="button" id="uploadBtn">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        上傳文章
+                    </button>
+                </form>
+                <div class="dividingLine"></div>
+            </div>
+
+            <!-- content section -->
+            <% var path = "/img/newsImg/" %>
+            <div id="contentSec">
+                <!-- 開始創作..... 記得調整top-->
+                <!-- write a new article -->
+                <div class="newArticle" hidden>
+                    <form id="form" name="" action="" method="POST" enctype="multipart/form-data" autocomplete="off">
+                        <div class="newsContainer">
+                            <!-- ------------------標籤們-------------------- -->
+                            <div class="tab">
+                                <div class="tab1">標題</div>
+                                <div class="tab2">段落 1</div>
+                                <div class="tab3">段落 2</div>
+                                <div class="tab4">段落 3</div>
+                                <div class="tab5">段落 4</div>
+                                <div class="tab6">段落 5</div>
+                            </div>
+                            <!-- ------------------內容顯示-------------------- -->
+                            <!-- 標題 -->
+                            <div class="tabContent">
+                                <label class="decoLine">文章標題&nbsp;｜
+                                    <input name="newsTitle" class="newsInput newsTitle" type="text" value="" />
+                                </label>
+                                <div>
+                                    <div>封面照片&nbsp;｜</div>
+                                    <div class="uploadImg">
+                                        <img class="imgEditBtn" src="../img/add.svg" alt="按我修改圖片yo" />
+                                        <input type="file" name="uploadImg0" class="fileInput" multiple>
+                                        <!-- 換圖片路徑 -->
+                                        <img src="<%= path %>罐頭.jpg" alt="">
+                                    </div>
+                                </div>
+                                <button type="submit" id="submitAll" class="confirmBtn">
+                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    確認上傳
+                                </button>
+                            
+                            </div>
+
+                            <% for (var i = 1; i <= 5; i++) { %>
+                            <!-- 段落<%= i %> -->
+                            <div class="tabContent">
+                                <label class="decoLine">第<%= i %>段&nbsp;｜
+                                    <input name="newsSubtitle<%= i %>" class="newsInput" type="text" placeholder="段落小標題" value="" />
+                                </label>
+                                <br />
+                                <label class="decoLine">段落內文&nbsp;｜<textarea name="newsArticle<%= i %>" placeholder="拖曳右下角，以調整輸入匡大小"></textarea>
+                                </label>
+                                <br />
+                                <label class="decoLine">照片說明&nbsp;｜
+                                    <input name="newsFigcaption<%= i %>" class="newsInput" type="text" value=""/>
+                                </label>
+                                <div>
+                                    <div>段落照片&nbsp;｜</div>
+                                    <div class="uploadImg">
+                                        <img class="imgEditBtn" src="../img/add.svg" alt="按我修改圖片yo" />
+                                        <input type="file" name="uploadImg<%= i %>" class="fileInput">
+                                        <!-- 換圖片路徑 -->
+                                        <img src="<%= path %>罐頭.jpg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                    </form>  
+                    
+                </div>
+                <table id="contentData">                    
+                    <tr>
+                        <th>#Id</th>
+                        <th>發布時間</th>
+                        <th>標題</th>
+                    </tr>
+                    <!-- /////////////////////////////////////////////////////// -->
+
+                    <!-- /////////////////////////////////////////////////////// -->
+                    <% for(let k = 0; k < news.length; k++){ %>
+                    <tr>
+                        <td onClick="toggleRow(this.parentNode)">
+                            <%= news[k].newsId %>
+                        </td>
+                        <td onClick="toggleRow(this.parentNode)">
+                            <%= news[k].newsDate %>
+                        </td>
+                        <td onClick="toggleRow(this.parentNode)">
+                            <%= news[k].newsTitle %>
+                        </td>
+                        <td class="showContent hideRow">
+                            <div class="dividingLine"></div>
+                            <div class="newsContainer">
+                                <form action="news/edit/<%= news[k].newsId %>" method="POST" enctype="multipart/form-data" autocomplete="off">
+                                    <!-- ------------------標籤們-------------------- -->
+                                    <div class="tab">
+                                        <button type="button" class="tab1">標題</button>
+                                        <button type="button" class="tab2">段落 1</button>
+                                        <button type="button" class="tab3">段落 2</button>
+                                        <button type="button" class="tab4">段落 3</button>
+                                        <button type="button" class="tab5">段落 4</button>
+                                        <button type="button" class="tab6">段落 5</button>
+                                    </div>
+                                    <!-- ------------------內容顯示-------------------- -->
+                                    <% var x = 0; %>
+                                    <!-- 標題 -->
+                                    <div class="tabContent">
+                                        <label class="decoLine">文章標題&nbsp;｜
+                                            <input name="newsTitle" class="newsInput" type="text" value="<%= news[k].newsTitle %>" />
+                                        </label>
+                                        <div>
+                                            <div>封面照片&nbsp;｜</div>
+                                            <div class="uploadImg">
+                                                <img class="imgEditBtn" src="../img/add.svg" alt="按我修改圖片yo" />
+                                                <input type="file" name="uploadImg<%= x %>" class="fileInput">
+                                                <!-- 換圖片路徑 -->
+                                                <img src="<%= path %><%= news[k].newsCoverImg %>" alt="">
+                                            </div>
+                                        </div>
+                                        <button class="confirmBtn" type="submit">
+                                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                            確認上傳
+                                        </button>    
+                                    </div>
+
+                                    <% for (var i = 0; i < newsContent.length; i++) { %>
+                                        <% if (newsContent[i].newsId != news[k].newsId) {continue;} %>
+                                        <% x++ %>
+                                        <!-- 段落<%= x %> -->
+                                        <div class="tabContent">
+                                            <label class="decoLine">第<%= x %>段&nbsp;｜
+                                                <input name="newsSubtitle<%= x %>" class="newsInput" type="text" placeholder="段落小標題" value="<%= newsContent[i].newsSubtitle %>" />
+                                            </label>
+                                            <br />
+                                            <label class="decoLine">段落內文&nbsp;｜
+                                                <textarea name="newsArticle<%= x %>" placeholder="拖曳右下角，以調整輸入匡大小"><%= newsContent[i].newsArticle %></textarea>
+                                            </label>
+                                            <br />
+                                            <label class="decoLine">照片說明&nbsp;｜
+                                                <input name="newsFigcaption<%= x %>" class="newsInput" type="text" value="<%= newsContent[i].newsFigcaption %>"/>
+                                            </label>
+                                            <div>
+                                                <div>段落照片&nbsp;｜</div>
+                                                <div class="uploadImg">
+                                                    <img class="imgEditBtn" src="../img/add.svg" alt="按我修改圖片yo" />
+                                                    <input type="text" name="storeImg<%= x %>" value="<%= newsContent[i].newsImg %>" hidden>
+                                                    <input type="file" name="uploadImg<%= x %>" class="fileInput">
+                                                    <!-- 換圖片路徑 -->
+                                                    <img src="<%= path %><%= newsContent[i].newsImg == null || newsContent[i].newsImg == '' ? '罐頭.jpg' : newsContent[i].newsImg %>" alt="">
+                                                </div>
+                                            </div>
+                                            <!-- <button class="confirmBtn">
+                                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                                確認上傳
+                                            </button>    -->
+                                        </div>
+                                    <% } %>
+                                    <!-- 罐頭 -->
+                                    <div class="tabContent">
+
+                                        <div class="decoLine">
+                                            <b>👈👈👈 點選左方頁籤，進行查看或編輯</b>
+                                        </div>
+                                        <label for="newsTitle" class="decoLine">文章標題&nbsp;｜
+                                            <input class="newsInput" type="text" placeholder="點選左方頁籤，進行查看或編輯" value="<%= news[k].newsTitle %>" />
+                                        </label>
+                                        <div>
+                                            <div>封面照片&nbsp;｜</div>
+                                            <div class="uploadImg">
+                                                <!-- 換圖片路徑 -->
+                                                <img src="<%= path %><%= news[k].newsCoverImg %>" alt="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="dividingLine"></div>
+                        </td>
+                    </tr>
+                    <% } %>
+                </table>
+            </div>
+            <script src="/js/jquery.min.js"></script>
+            <script src="/js/news.js"></script>
+            <script src="/js/main.js"></script>
+        </div>
+    </body>
+</html>
