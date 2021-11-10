@@ -1,0 +1,240 @@
+/* ------------------------- right section ------------------------- */
+
+/*  heading section  */
+.searchInput {
+    display: inline;
+    border: 2px solid var(--white);
+    border-radius: 50px;
+    color: var(--white);
+    padding: 8px 20px;
+    margin: 0 8px;
+}
+.searchInput:hover {
+    box-shadow: 1px 1px 10px 2px rgba(255, 255, 255, 0.2);
+}
+.searchInput select,
+.searchInput input {
+    background-color: var(--lightBlue);
+    border: none;
+    outline: none;
+    color: var(--fontBlue);
+}
+#searchBtn,
+#clearBtn,
+#uploadBtn {
+    padding: 8px 20px;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 0px 20px 0px 20px;
+    color: var(--fontBlue);
+    margin: 0 8px 20px;
+    /* position: relative; */
+}
+#searchBtn:hover,
+#clearBtn:hover,
+#uploadBtn:hover {
+    filter: drop-shadow(1px 1px 3px var(--darkBlue));
+}
+#searchBtn {
+    background-color: var(--white);
+}
+#clearBtn {
+    background-color: var(--darkBlue);
+    color: var(--white);
+}
+#uploadBtn {
+    background-color: var(--lightYellow);
+}
+/*  content section  */
+#contentSec {
+    /* main.css檔案裡面 這裡有設定 position: relative; */
+    top: 200px; /*組長 這邊要依據heading高度調整*/
+}
+.newArticle {
+    padding: 0 6%;
+    /* position: relative; */
+    /* border-bottom: 2px solid var(--white); */
+}
+
+td,
+th {
+    min-height: 40px;
+    vertical-align: middle;
+    padding: 8px;
+    position: relative;
+}
+th {
+    font-size: 14px;
+    line-height: 20px;
+}
+td:nth-last-child(2) {
+    text-align: left;
+}
+td:last-child {
+    background-color: var(--lightBlue);
+    outline: 1px solid var(--lightBlue); /*蓋住背景右方的細線*/
+}
+
+td:not(:last-child) {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+tr {
+    border: none;
+    border-radius: 0 30px 0 0;
+    display: grid;
+    grid-template-columns: 1fr 3fr 6fr;
+    justify-content: flex-start;
+}
+
+tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.4);
+}
+tr:not(:first-child):hover {
+    background-color: var(--lightYellow);
+}
+.lightYellowBgc {
+    /*使用js插入*/
+    background-color: var(--lightYellow);
+}
+
+/* --------------------手風琴展開---------------------- */
+.newsContainer {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 20px;
+}
+.tab {
+    /* background-color: tomato; */
+    float: left;
+    width: 90px;
+}
+/* ------------左側tabs------------ */
+.tab button, .tab div {
+    width: 100%;
+    display: block;
+    background-color: var(--darkBlue);
+    border-radius: 0 20px 0 20px;
+    border: none;
+    outline: none;
+    color: var(--white);
+    cursor: pointer;
+    margin: 30px auto;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    transition: 0.3s;
+}
+.tab button:hover, .tab div:hover  {
+    background-color: var(--white);
+    color: var(--fontBlue);
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active, .tab div.active {
+    background-color: var(--lightYellow);
+    color: var(--fontBlue);
+}
+.tab div{
+    height: 42px;
+    padding: 0;
+}
+/* ------------右側content------------ */
+.tabContent {
+    float: left;
+    width: calc(100% - 90px);
+    border-left: 2px solid var(--lightYellow);
+    border-bottom: 2px solid var(--lightYellow);
+    border-radius: 0 0 0 30px;
+    padding: 0 30px 30px;
+    margin-bottom: 80px;
+    position: relative;
+    top: 72px;
+    left: -2px;
+    display: none;
+}
+#contentData .tabContent:last-child {
+    display: block;
+}
+.newArticle .tabContent:nth-of-type(2) {
+    display: block;
+}
+.newsInput {
+    width: 70%;
+    background-color: transparent;
+    border: none;
+    color: var(--fontBlue);
+    font-size: 16px;
+    outline: none;
+}
+.decoLine {
+    display: inline-block;
+    width: 100%;
+    border-left: 2px solid var(--lightYellow);
+    border-bottom: 2px solid var(--lightYellow);
+    border-radius: 0 0 0 20px;
+    padding: 0 10px 5px;
+    margin-bottom: 20px;
+}
+textarea {
+    width: 70%; 
+    height: 200px;
+    background-color: transparent;
+    border: 1px solid var(--lightYellow);
+    color: var(--fontBlue);
+    font-size: 16px;
+    padding: 0 20px;
+    outline: none;
+}
+label ~ div {
+    /* background-color: violet; */
+    padding: 10px;
+}
+.uploadImg {
+    position: relative;
+    background-color: var(--darkBlue);
+    width: 520px;
+    height: 260px;
+    margin: 0 100px;
+}
+.uploadImg img:last-child {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.fileInput {
+    display: none;
+}
+/* 上傳圖片的圓形加號 */
+.imgEditBtn {
+    width: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+.imgEditBtn:hover {
+    filter: drop-shadow(3px 3px 2px var(--fontBlue));
+}
+
+.confirmBtn {
+    position: absolute;
+    bottom: 0;
+    right: 3%;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 0px 20px 0px 20px;
+    background-color: var(--lightYellow);
+    color: var(--fontBlue);
+    margin: 0 8px 30px;
+    padding: 8px 20px;
+    width: 120px;
+}
+/* ------------------------------------------------ */
+@media only screen and (min-width: 1300px) {
+    #uploadBtn {
+        position: absolute;
+        right: 10%;
+    }
+}

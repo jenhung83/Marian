@@ -1,0 +1,117 @@
+/* ------------------------- right section ------------------------- */
+
+/*  ----------heading section----------  */
+.searchInput {
+    display: inline;
+    border: 2px solid var(--white);
+    border-radius: 50px;
+    color: var(--white);
+    padding: 8px 20px;
+    margin: 0 8px;
+}
+.searchInput:hover {
+    box-shadow: 1px 1px 10px 2px rgba(255, 255, 255, 0.2);
+}
+.searchInput select,
+.searchInput input {
+    background-color: var(--lightBlue);
+    border: none;
+    outline: none;
+    color: var(--fontBlue);
+}
+#searchBtn,
+#clearBtn {
+    padding: 8px 20px;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 0px 20px 0px 20px;
+    color: var(--fontBlue);
+    margin: 0 8px 20px;
+    /* position: relative; */
+}
+#searchBtn:hover,
+#clearBtn:hover {
+    filter: drop-shadow(1px 1px 3px var(--darkBlue));
+}
+#searchBtn {
+    background-color: var(--white);
+}
+#clearBtn {
+    background-color: var(--darkBlue);
+    color: var(--white);
+}
+
+/*  ----------content section----------  */
+#contentSec {
+    /* main.css檔案裡面 這裡有設定 position: relative; */
+    top: 200px; /*組長 這邊要依據heading高度調整*/
+}
+tr {
+    border: none;
+    border-radius: 0 30px 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 0.8fr 2fr 3.5fr 6fr;
+    justify-content: flex-start;
+}
+tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.4);
+}
+tr:not(:first-child):hover {
+    background-color: var(--lightYellow);
+}
+td,
+th {
+    min-height: 40px;
+    vertical-align: middle;
+    padding: 8px;
+    position: relative;
+    /* border: 2px solid blue; */
+}
+th {
+    font-size: 14px;
+    line-height: 20px;
+}
+td:nth-last-child(2) {
+    text-align: left;
+}
+td:nth-child(6),
+td:nth-child(5) {
+    overflow: auto;
+    text-overflow: initial;
+}
+td:last-child {
+    background-color: var(--lightBlue);
+    outline: 1px solid var(--lightBlue); /*蓋住背景右方的細線*/
+}
+td:not(:last-child) {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* --------------------手風琴展開---------------------- */
+.info {
+    position: relative;
+    width: 100%;
+    padding: 3% 0 0;
+    margin: 0 auto;
+}
+.info ul {
+    /* border: 2px solid red; */
+    width: 100%;
+}
+.infoTxt li {
+    width: 100%;
+    list-style-type: none;
+    border-left: 2px solid var(--lightYellow);
+    border-bottom: 2px solid var(--lightYellow);
+    border-radius: 0 0 0 15px;
+    color: var(--fontBlue);
+    margin: 0 5% 30px 0;
+    padding: 0 10px 5px;
+}
+.infoTxt span {
+    margin-right: 2rem;
+}
+.infoTxt > div {
+    color: var(--white);
+}
